@@ -25,4 +25,4 @@ make up || make upd(detached mode)
 1) В браузере в адресной строке: localhost, чтобы просто зайти на сайт. 
 2) localhost/wp-admin, зайти в аккаунт. login: frontman, pass: squidgame. 
 3) localhost/adminer.php, зайти в adminer. server: mariadb, user: wpuser, pass: password.
-4) localhost:81, зайди на статическую html-страничку. Не рекомендуется. В случае если зайдете, после посещения промойте глаза проточной водой. 
+4) localhost:81, зайди на статическую html-страничку. Не рекомендуется. В случае если зайдете, после посещения тщательно промойте глаза проточной водой. 
