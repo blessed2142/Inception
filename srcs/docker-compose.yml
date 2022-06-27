@@ -1,0 +1,86 @@
+version: '3.9'
+
+networks:
+  inception-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/Users/$USER/Desktop/dbdata'
+  wpdata:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/Users/$USER/Desktop/wpdata'
+
+services:
+  nginx:
+    env_file: .env
+    depends_on:
+      - wordpress
+    image: nginx
+    build: ./requirements/nginx
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - wpdata:/var/www/html
+    networks:
+      - inception-network
+
+  static_site:
+    image: static_site
+    build: ./requirements/bonus/static
+    restart: unless-stopped
+    ports:
+      - "81:81"
+    networks:
+      - inception-network
+
+  wordpress:
+    depends_on:
+      - mariadb
+    image: wordpress
+    build: ./requirements/wordpress
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - wpdata:/var/www/html
+    networks:
+      - inception-network
+
+  mariadb:
+    image: mariadb
+    build: ./requirements/mariadb
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - inception-network
+
+  redis:
+    image: redis
+    build: ./requirements/bonus/redis
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - inception-network
+
+  adminer:
+    depends_on:
+      - wordpress
+    image: adminer
+    build: ./requirements/bonus/adminer
+    restart: unless-stopped
+    volumes:
+      - dbdata:/var/lib/mysql
+      - wpdata:/var/www/html
+    networks:
+      - inception-network
+
