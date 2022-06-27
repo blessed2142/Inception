@@ -20,6 +20,7 @@ Docker-compose. Nginx, Wordpress, MariaDB, Redis, Adminer.
 3) Simple static web-site.
 
 ## Usage:
+В /srcs/docker-compose.yaml настраиваем 13 и 20 строку. То есть создаем директории под volumes и вписываем путь к ним.
 make up || make upd(detached mode)
 1) В браузере в адресной строке: localhost, чтобы просто зайти на сайт. 
 2) localhost/wp-admin, зайти в аккаунт. login: frontman, pass: squidgame. 
